@@ -1,10 +1,14 @@
 import React, {useState} from 'react';
 import '../App.css';
-import logo from '../images/loginimg.jpg';
+import logo from './images/loginimg.jpg';
+import { useNavigate  } from 'react-router-dom';
+// import { useHistory } from 'history';
+
 
 
 
   const Signup = () =>{
+    const navigate = useNavigate();
     const [user, setUser] = useState({
       name:"", email:"", phone:"", work:"", password:"", cpassword:""
     });
@@ -17,10 +21,38 @@ import logo from '../images/loginimg.jpg';
 
     setUser({...user, [iname]:value});
   }
+
+const PostData = async (e) => {
+  e.preventDefault();
+
+  const {name, email, phone, work, password, cpassword} = user;
+  const res = await fetch("/register",{
+    method:"POST",
+    headers:{
+      "Content-Type" : "application/json"
+    },
+    body : JSON.stringify({
+      name, email, phone, work, password, cpassword
+    })
+  });
+  const data = await res.json();
+  if(data.status===422 || !data){
+    window.alert("Invalid Registration");
+    console.log("Invalid Registration");
+  }else{
+    window.alert("Registration Successful");
+    console.log("Registration Successful");
+
+    navigate("/login");
+  }
+}
+
+
+
   return (
     <>
         <div className="signup-item">
-        <form className="container">
+        <form method="POST" className="container">
         <h3>Sign up</h3>
 
           <div className="container-item">
@@ -90,7 +122,7 @@ import logo from '../images/loginimg.jpg';
           </div>
           
           <div className="container-item">
-            <button className="button-item">Sign Up</button>
+            <button className="button-item" onClick={PostData}>Sign Up</button>
           </div>
         </form>
         

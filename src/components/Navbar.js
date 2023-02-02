@@ -1,7 +1,7 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.css';
 import { NavLink } from 'react-router-dom';
-import logo from '../images/logo1.png';
+import logo from './images/logo1.png';
 import '../App.css';
 
 
@@ -33,6 +33,9 @@ const Navbar = () => {
       </li>
       <li className="nav-item">
         <NavLink className="nav-link" to="Signup">Register</NavLink>
+      </li>
+      <li className="nav-item">
+        <NavLink className="nav-link" to="logout">Logout</NavLink>
       </li>
   
     </ul>
